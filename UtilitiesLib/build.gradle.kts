@@ -25,8 +25,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -47,11 +47,11 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            register<MavenPublication>("release") {
+            create<MavenPublication>("release") {
                 groupId = "com.bbva"
                 artifactId = "utilitiesLib"
                 version = "1.0"
-                artifact("$buildDir/outputs/aar/UtilitiesLib-release.aar")
+                //artifact("$buildDir/outputs/aar/UtilitiesLib-release.aar")
             }
         }
     }
