@@ -51,6 +51,7 @@ afterEvaluate {
                 groupId = "com.bbva"
                 artifactId = "utilitiesLib"
                 version = "1.0"
+                artifact("$buildDir/outputs/aar/UtilitiesLib-release.aar")
             }
         }
     }
