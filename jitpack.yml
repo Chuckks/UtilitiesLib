@@ -1,8 +1,2 @@
 jdk:
   - openjdk17
-before_install:
-  - ./scripts/prepareJitpackEnvironment.sh
-
-steps:
-  -name: Build AAR
-  run: bash ./gradlew :utilitieslib:assemble

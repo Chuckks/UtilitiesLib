@@ -44,14 +44,15 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                groupId = "com.bbva"
-                artifactId = "utilitiesLib"
-                version = "1.0"
-                //artifact("$buildDir/outputs/aar/UtilitiesLib-release.aar")
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.bbva"
+            artifactId = "utilitiesLib"
+            version = "1.0"
+
+            afterEvaluate {
+                from(components["release"])
             }
         }
     }
