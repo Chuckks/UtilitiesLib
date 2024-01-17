@@ -14,6 +14,9 @@ object Json {
     inline fun <reified E> fromJson(readText: String) =
         Gson().fromJson(readText, E::class.java) ?: ""
 
+    fun <T> fromJson(readText: String, value: Class<T>) =
+        Gson().fromJson(readText, value)
+
     inline fun <reified E> toString(data: E) =
         Gson().toJson(data, E::class.java) ?: ""
 }
