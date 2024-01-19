@@ -1,5 +1,7 @@
 package com.bbva.utilitieslib.extensions
 
+import com.bbva.utilitieslib.utils.Convert
+
 fun ByteArray.toHexaString(): String {
     val strBuilder = StringBuilder()
     for (ch in this) {
@@ -41,4 +43,17 @@ fun ByteArray.readBcd(startIndex: Int, counter: Int): Int {
     }
 
     return result
+}
+
+fun ByteArray.readBbc(offset: Int, nibbles: Byte): Int {
+    var adjustedNibbles = nibbles.toInt()
+
+    if (adjustedNibbles and 0x01 != 0) {
+        ++adjustedNibbles
+    }
+
+    val count = adjustedNibbles / 2
+    Convert.toBcdToDecimal(adjustedNibbles, copyOfRange(offset, offset + count))
+
+    return count
 }
