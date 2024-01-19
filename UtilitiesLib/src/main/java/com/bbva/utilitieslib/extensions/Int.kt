@@ -37,3 +37,16 @@ fun Int.toBcd(): ByteArray {
     result.reverse()
     return result
 }
+
+fun Int.getDigitCount(): Int {
+    val value = this.toUInt()
+    var count: Int = 0
+
+    var currentValue = value
+    while (currentValue > 0u) {
+        currentValue /= 10u
+        count++
+    }
+
+    return count
+}

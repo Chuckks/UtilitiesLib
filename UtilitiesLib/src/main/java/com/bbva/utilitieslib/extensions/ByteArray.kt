@@ -45,15 +45,15 @@ fun ByteArray.readBcd(startIndex: Int, counter: Int): Int {
     return result
 }
 
-fun ByteArray.readBbc(offset: Int, nibbles: Byte): Int {
-    var adjustedNibbles = nibbles.toInt()
+fun ByteArray.readBbcPair(offset: Int, nibbles: Int): Pair<Int, Int> {
+    var adjustedNibbles = nibbles
 
     if (adjustedNibbles and 0x01 != 0) {
         ++adjustedNibbles
     }
 
     val count = adjustedNibbles / 2
-    Convert.toBcdToDecimal(adjustedNibbles, copyOfRange(offset, offset + count))
+    val result = Convert.toBcdToDecimal(adjustedNibbles, copyOfRange(offset, offset + count))
 
-    return count
+    return Pair(count, result)
 }

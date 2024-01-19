@@ -6,6 +6,7 @@ class Convert {
 
     companion object{
 
+        //@ -> return: 1234  len2Convert:4  source: 0x12/0x34  startIndex: 0
         fun toBcdToDecimal(lenToConvert: Int, source: ByteArray, startIndex: Int = 0): Int {
             val lenSrc = source.size
 
@@ -37,6 +38,89 @@ class Convert {
             }
 
             return ulTmp1
+        }
+
+        //@ -> return: 0x01/0x23/0x45/  source: '12345'
+        fun toAsciiToBcd(source: ByteArray): ByteArray {
+            var lenToConvert = source.size
+
+            if (lenToConvert % 2 != 0) {
+                lenToConvert++
+            }
+
+            lenToConvert /= 2
+            return toAsciiToBcd(lenToConvert, source, 0)
+        }
+
+        //@ -> return: 0x01/0x23/0x45/  source: '12345'  startIndex: 0
+        fun toAsciiToBcd(lenToConvert: Int, source: ByteArray, startIndex: Int): ByteArray {
+            var lenSrc = source.size
+            var newStartIndex = startIndex
+
+            if (lenSrc - newStartIndex <= 0) {
+                throw IllegalArgumentException("( lenSrc [$lenSrc] - startIndex [$newStartIndex] ) <= 0")
+            }
+
+            lenSrc -= newStartIndex
+            var indexDest: Int = if (lenToConvert > lenSrc / 2) {
+                lenToConvert - (lenSrc + 1) / 2
+            } else {
+                0
+            }
+
+            var chDest: Byte
+            val destination = ByteArray(lenToConvert)
+
+            var index = 0
+            while (index < (lenSrc + 1) / 2) {
+                chDest = if ((lenSrc % 2 == 0 && index == 0) || index > 0) {
+                    (source[newStartIndex++].toInt() shl 4 and 0xF0).toByte()
+                } else {
+                    0
+                }
+
+                chDest = (chDest + (source[newStartIndex++].toInt() and 0x0F)).toByte()
+                destination[indexDest++] = chDest
+
+                if (indexDest >= lenToConvert) {
+                    break
+                }
+
+                index++
+            }
+
+            return destination
+        }
+
+        //@ -> return: 0x12/0x34/0x56/0x78/0x90 _ len2Convert: 10 _ source: 1234567890
+        fun toDecimalToBcd(lenToConvert: Int, source: Int): ByteArray {
+            val aucTab = ByteArray(5)
+            var src: Long = source.toLong()
+
+            var ulTmp2 = 100000000L
+            val size = aucTab.size
+
+            for (index in 0 until size) {
+                aucTab[index] = (src / ulTmp2).toByte()
+                aucTab[index] = (((aucTab[index] / 10) shl 4) + (aucTab[index] % 10)).toByte()
+
+                src %= ulTmp2
+                ulTmp2 /= 100
+            }
+
+            var len2Convert = lenToConvert
+            if (len2Convert > 5) {
+                len2Convert = 5
+            }
+
+            val indexDest = len2Convert
+            val destination = ByteArray(len2Convert)
+
+            for (index in 0 until len2Convert) {
+                destination[indexDest - 1 - index] = aucTab[4 - index]
+            }
+
+            return destination
         }
     }
 }
