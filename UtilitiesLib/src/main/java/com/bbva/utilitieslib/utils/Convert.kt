@@ -122,5 +122,48 @@ class Convert {
 
             return destination
         }
+
+        //@ -> return: "1234"  source: 0x12/0x34
+        fun toBcdToAscii(source: ByteArray): String {
+            return toBcdToAscii(source.size * 2, source, 0)
+        }
+
+        //@ -> return: "1234"  len2Convert: 4  source: 0x12/0x34  startIndex: 0
+        fun toBcdToAscii(source: ByteArray, startIndex: Int): String {
+            return toBcdToAscii((source.size - startIndex) * 2, source, startIndex)
+        }
+
+        //@ -> return: "1234"  len2Convert: 4  source: 0x12/0x34  startIndex: 0
+        fun toBcdToAscii(len2Convert: Int, source: ByteArray): String {
+            return toBcdToAscii(len2Convert, source, 0)
+        }
+
+        //@ -> return: "1234"  len2Convert: 4  source: 0x12/0x34  startIndex: 0
+        fun toBcdToAscii(len2Convert: Int, source: ByteArray, startIndex: Int): String {
+            val lenDest = len2Convert / 2
+            val lenSrc = source.size
+            var newStartIndex = startIndex
+
+            if (lenDest > (lenSrc - newStartIndex)) {
+                throw IllegalArgumentException("len2Convert [$lenDest] > ( lenSrc [$lenSrc] - startIndex [$newStartIndex] )")
+            }
+
+            var indexDest = 0
+            val destination = StringBuilder(len2Convert)
+
+            if (len2Convert % 2 != 0) {
+                destination.append(((source[newStartIndex++] and 0x0F) + 0x30).toChar())
+            }
+
+            for (index in 0 until lenDest) {
+                val ch = source[newStartIndex++].toInt()
+
+                destination.append(((ch and 0xF0 ushr 4) + 0x30).toChar())
+                destination.append(((ch and 0x0F) + 0x30).toChar())
+            }
+
+            return destination.toString()
+        }
+
     }
 }
