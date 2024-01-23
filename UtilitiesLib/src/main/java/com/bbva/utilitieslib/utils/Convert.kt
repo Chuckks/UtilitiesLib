@@ -180,5 +180,34 @@ class Convert {
             return result
         }
 
+        //@ -> return: '1AC45'  source: 0x01/0xAC/0x45  uiLen 5
+        fun toHexa2Ascii(len2Convert: Int, source: ByteArray): ByteArray {
+            var indexSrc = 0
+            var indexDest = 0
+            val destination = ByteArray(len2Convert)
+
+            if (len2Convert % 2 != 0) {
+                destination[indexDest++] = ((source[indexSrc++] and 0x0F) + 0x30).toByte()
+            }
+
+            for (index in 0 until len2Convert / 2) {
+                destination[indexDest++] = (((source[indexSrc] and 0xF0.toByte()).toInt() shr 4) + 0x30).toByte()
+                destination[indexDest++] = ((source[indexSrc++] and 0x0F) + 0x30).toByte()
+            }
+
+            for (index in destination.indices) {
+                var ch = destination[index]
+                if (ch >= 0x3A.toByte()) {
+                    destination[index] = (ch + 7).toByte()
+                }
+            }
+
+            return destination
+        }
+
+        fun toHexa2Ascii(source: ByteArray): ByteArray {
+            return toHexa2Ascii(source.size * 2, source)
+        }
+
     }
 }
