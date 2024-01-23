@@ -165,5 +165,20 @@ class Convert {
             return destination.toString()
         }
 
+        fun toBcdToHexa(value: Byte): Byte {
+            return ((value.toInt() shr 4) * 10 + (value.toInt() and 0x0F)).toByte()
+        }
+
+        fun toBcdToHexa(value: ByteArray): ByteArray {
+            val length = value.size
+            val result = ByteArray(length)
+
+            for (index in 0 until length) {
+                result[index] = toBcdToHexa(value[index])
+            }
+
+            return result
+        }
+
     }
 }
