@@ -5,7 +5,7 @@ import kotlin.experimental.and
 class Convert {
 
     companion object{
-
+/*
         //@ -> return: 1234  len2Convert:4  source: 0x12/0x34  startIndex: 0
         fun toBcdToDecimal(lenToConvert: Int, source: ByteArray, startIndex: Int = 0): Int {
             val lenSrc = source.size
@@ -209,5 +209,7 @@ class Convert {
             return toHexa2Ascii(source.size * 2, source)
         }
 
+
+ */
     }
 }

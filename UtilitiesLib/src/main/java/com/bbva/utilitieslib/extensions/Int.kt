@@ -50,3 +50,35 @@ fun Int.getDigitCount(): Int {
 
     return count
 }
+
+//@ -> return: 0x12/0x34/0x56/0x78/0x90 _ len2Convert: 10 _ source: 1234567890
+fun Int.toDecimalToBcd(lenToConvert: Int): ByteArray {
+    val aucTab = ByteArray(5)
+    var src: Long = this.toLong()
+
+    var ulTmp2 = 100000000L
+    val size = aucTab.size
+
+    for (index in 0 until size) {
+        aucTab[index] = (src / ulTmp2).toByte()
+        aucTab[index] = (((aucTab[index] / 10) shl 4) + (aucTab[index] % 10)).toByte()
+
+        src %= ulTmp2
+        ulTmp2 /= 100
+    }
+
+    var len2Convert = lenToConvert
+    if (len2Convert > 5) {
+        len2Convert = 5
+    }
+
+    val indexDest = len2Convert
+    val destination = ByteArray(len2Convert)
+
+    for (index in 0 until len2Convert) {
+        destination[indexDest - 1 - index] = aucTab[4 - index]
+    }
+
+    return destination
+}
+
