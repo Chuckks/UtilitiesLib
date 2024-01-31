@@ -1,4 +1,4 @@
-package com.pagatodoholdings.utilitieslib.interfaces
+package com.bbva.utilitieslib.interfaces
 
 interface IEmpty {
 
