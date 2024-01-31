@@ -3,12 +3,10 @@ package com.bbva.utilitieslib.security
 import android.content.Context
 import android.util.Base64
 import com.bbva.utilitieslib.extensions.getAssetToByteArray
-import com.bbva.utilitieslib.extensions.getAssetToStream
 import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.security.KeyFactory
 import java.security.KeyPairGenerator
-import java.security.KeyStore
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.spec.PKCS8EncodedKeySpec

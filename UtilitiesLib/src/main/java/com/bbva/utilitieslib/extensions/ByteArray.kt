@@ -1,6 +1,5 @@
 package com.bbva.utilitieslib.extensions
 
-import com.bbva.utilitieslib.utils.Convert
 import kotlin.experimental.and
 
 fun ByteArray.toHexaString(): String {
@@ -55,7 +54,6 @@ fun ByteArray.readBbcPair(offset: Int, nibbles: Int): Pair<Int, Int> {
 
     val count = adjustedNibbles / 2
     val result = copyOfRange(offset, offset + count).toBcdToDecimal(adjustedNibbles)
-    //val result = Convert.toBcdToDecimal(adjustedNibbles, copyOfRange(offset, offset + count))
 
     return Pair(count, result)
 }
@@ -156,10 +154,6 @@ fun ByteArray.toBcdToAscii(startIndex: Int): String =
     this.toBcdToAscii((this.size - startIndex) * 2, startIndex)
 
 //@ -> return: "1234"  len2Convert: 4  source: 0x12/0x34  startIndex: 0
-fun ByteArray.toBcdToAscii(len2Convert: Int, source: ByteArray): String =
-    this.toBcdToAscii(len2Convert, 0)
-
-//@ -> return: "1234"  len2Convert: 4  source: 0x12/0x34  startIndex: 0
 fun ByteArray.toBcdToAscii(len2Convert: Int, startIndex: Int): String {
     val lenDest = len2Convert / 2
     val lenSrc = this.size
@@ -169,7 +163,6 @@ fun ByteArray.toBcdToAscii(len2Convert: Int, startIndex: Int): String {
         throw IllegalArgumentException("len2Convert [$lenDest] > ( lenSrc [$lenSrc] - startIndex [$newStartIndex] )")
     }
 
-    var indexDest = 0
     val destination = StringBuilder(len2Convert)
 
     if (len2Convert % 2 != 0) {
@@ -191,13 +184,13 @@ fun ByteArray.toBcdToHexa(): ByteArray {
     val result = ByteArray(length)
 
     for (index in 0 until length) {
-        result[index] = this[index].toBcdToHexa() //Convert.toBcdToHexa(this[index])
+        result[index] = this[index].toBcdToHexa()
     }
 
     return result
 }
 
-fun ByteArray.toHexaToAscii(source: ByteArray): ByteArray =
+fun ByteArray.toHexaToAscii(): ByteArray =
     this.toHexaToAscii(this.size * 2)
 
 //@ -> return: '1AC45'  source: 0x01/0xAC/0x45  uiLen 5
