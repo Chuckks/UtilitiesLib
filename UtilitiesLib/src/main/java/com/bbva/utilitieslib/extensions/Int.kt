@@ -10,6 +10,16 @@ fun Int.isOdd(): Boolean{
     return (this and 0x01).toBoolean()
 }
 
+fun Int.isEven() = !isOdd()
+
+fun Int.toHexString(): String {
+    val result = this.toString(16)
+    return if (result.length.isOdd())
+        "0$result"
+    else
+        result
+}
+
 fun Int.toBcd(): ByteArray {
     require(this >= 0) { "Input value must be non-negative." }
 

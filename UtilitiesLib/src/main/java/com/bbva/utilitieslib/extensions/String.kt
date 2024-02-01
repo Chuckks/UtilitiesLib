@@ -7,6 +7,42 @@ fun String.toBoolean(): Boolean =
         else -> throw IllegalArgumentException("ilegal value $this")
     }
 
+fun String.formatAmount(symbol: String, decimal: Int): String {
+    val length = this.length
+    val zeros = "00000000"
+    var amountAux = StringBuilder()
+
+    if (length < decimal) {
+        val decimalsAdd = decimal - length
+        amountAux.append("0.")
+            .append(zeros.substring(0 until decimalsAdd))
+            .append(this)
+    }
+    else {
+        val calc = length - decimal
+        amountAux.append(this.substring(0, calc))
+            .append(".")
+            .append(this.substring(calc))
+    }
+    return amountAux.toString().toDouble().formatAmount(symbol)
+}
+
+fun String.isAlphabetic(): Boolean {
+    for (ch in this) {
+        if (!ch.isLetter())
+            return false
+    }
+    return true
+}
+
+fun String.isAlphanumeric(): Boolean {
+    for (ch in this) {
+        if (!ch.isLetterOrDigit())
+            return false
+    }
+    return true
+}
+
 private fun calcHexa(ch1: Char, ch2: Char) =
     ((ch1.toHexa() and 0xFF) shl 4 or (ch2.toHexa() and 0xFF)).toByte()
 
