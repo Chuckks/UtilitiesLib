@@ -1,0 +1,199 @@
+@startuml
+!define DARKBLUE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+interface com.bbva.utilitieslib.interfaces.IBundle {
++ Bundle toBundle()
+}
+
+class com.bbva.utilitieslib.ExampleUnitTest {
++ void addition_isCorrect()
+}
+
+class com.bbva.utilitieslib.utils.TimeSpan$Companion {
+- Int secondPerMinute
+- Int minutePerHour
+- Int hoursPerDay
+- Int secondsPerHour
+- Int millisPerSecond
+- Double secondPerMillis
+- Int millisPerMinute
+- Double minutePerMillis
+- Int millisPerHour
+- Double hourPerMillis
+- Int millisPerDay
+- Double dayPerMillis
+- Long maxSeconds
+- Long minSeconds
+- Long maxMillisSeconds
+- Long minMillisSeconds
++  ZERO
++ TimeSpan MAX_VALUE
++ TimeSpan MIN_VALUE
+- void getTotalSeconds(Int,Int,Int)
+- Long dateToTicks(Int,Int,Int,Int,Int)
++ Long timeToTicks(Int,Int,Int)
+}
+
+
+class com.bbva.utilitieslib.utils.TimeSpan {
++ Int days
++ Int hours
++ Int milliSeconds
++ Int minutes
++ Int seconds
++ Double totalDay
++ Double totalHours
++ Long totalMilliseconds
++ Double totalMinutes
++ Double totalSeconds
++ Int compareTo(TimeSpan)
++ Boolean equals(Any?)
++ void hashCode()
++ TimeSpan plus(TimeSpan)
++ TimeSpan minus(TimeSpan)
++ Calendar toCalendar()
+}
+
+
+class com.bbva.utilitieslib.ExampleInstrumentedTest {
++ void useAppContext()
+}
+
+interface com.bbva.utilitieslib.interfaces.IProcess {
++ Boolean initialize()
++ Boolean prepare()
++ Boolean execute()
++ Boolean checkResponse()
++ Boolean processError()
++ Boolean processData()
++ Boolean saveData()
++ Boolean complete()
++ Boolean run()
+}
+
+enum com.bbva.utilitieslib.security.KeyUtils$EAlgo {
++  TDES
++  DES
++  RSA
+}
+
+class com.bbva.utilitieslib.security.KeyUtils$EJavaAlgo$Companion {
++ void findName(EAlgo)
++ void findAlgo(String)
+}
+
+enum com.bbva.utilitieslib.security.KeyUtils$EJavaAlgo {
++  AES
++  DESede
++  RSA
+}
+
+enum com.bbva.utilitieslib.security.KeyUtils$EKeyParity {
++  EVEN
++  ODD
++  NONE
+}
+
+class com.bbva.utilitieslib.security.KeyUtils$Companion {
++ ByteArray randomGenerator(Int)
++ void createSecretKey(EAlgo,String)
++ SecretKey createSecretKey(EAlgo,ByteArray)
++ ByteArray adjustParity(EKeyParity,ByteArray)
++ SecretKey keyGenerator(EAlgo,Int)
+}
+
+class com.bbva.utilitieslib.security.KeyUtils {
+}
+interface com.bbva.utilitieslib.interfaces.IEmpty {
++ Boolean isEmpty()
++ void isNotEmpty()
+}
+
+enum com.bbva.utilitieslib.security.RSA$EKeyType {
++  PRIVATE
++  PUBLIC
+}
+
+class com.bbva.utilitieslib.security.RSA$Companion {
+-  ALGORITHM
+-  TRANSFORMATION
+-  PEM_RSA_PRIVATE_START
+-  PEM_RSA_PRIVATE_END
+-  PEM_RSA_PUBLIC_START
+-  PEM_RSA_PUBLIC_END
+-  REPLACE_STRING
+-  END_LINE_AND_RETURN
+-  END_LINE
+- void getFormatKey(String,String,String)
+- void base64Decoder(String)
++ Pair<PublicKey, PrivateKey> genKeyPair(Int)
++ void encodePrivateKey(ByteArray)
++ PrivateKey encodePrivateKey(String)
++ void encodePublicKey(ByteArray)
++ PublicKey encodePublicKey(String)
++ void decode(PrivateKey)
++ void decode(PublicKey)
+}
+
+
+class com.bbva.utilitieslib.security.RSA {
++ PrivateKey privateKey
++ PublicKey publicKey
+- void getFileData(Context,String)
+- ByteArray readKey(Context,String,String,String)
++ void loadPrivateKey(Context,String)
++ void loadPublicKey(Context,String)
++ void loadKeyFile(Context,String,EKeyType)
++ void genKeyPair(Int)
+- void setPrivateKey(ByteArray)
+- void setPrivateKey(String)
+- void setPublicKey(ByteArray)
+- void setPublicKey(String)
++ void getPrivateKeyData()
++ void getPublicKeyData()
++ void encrypt(String)
++ void encrypt(ByteArray)
++ void decrypt(String)
++ void decrypt(ByteArray)
+- ByteArray baseCrypt(Int,Key,ByteArray)
+}
+
+
+class com.bbva.utilitieslib.utils.FormatAmount {
+-  amountAux
++ void isEmpty()
++ String format(BigDecimal)
++ String format(String)
+- void clear()
+- void build()
+- void addDecimalSeparator(String)
+- void addThousandSeparator(String)
+- void addSymbol()
+- void addSpace()
+- void addZero()
+}
+
+
+class com.bbva.utilitieslib.utils.Json {
++ List<E> toList(String)
++ void toJson(List<E>)
++ void fromJson(String)
++ void fromJson(String,Class<T>)
++ void toString(E)
+}
+
+
+
+com.bbva.utilitieslib.utils.TimeSpan +.. com.bbva.utilitieslib.utils.TimeSpan$Companion
+com.bbva.utilitieslib.utils.Comparable <|.. com.bbva.utilitieslib.utils.TimeSpan
+com.bbva.utilitieslib.security.KeyUtils +.. com.bbva.utilitieslib.security.KeyUtils$EAlgo
+com.bbva.utilitieslib.security.EJavaAlgo +.. com.bbva.utilitieslib.security.EJavaAlgo$Companion
+com.bbva.utilitieslib.security.KeyUtils$EJavaAlgo +.. com.bbva.utilitieslib.security.KeyUtils$EJavaAlgo$Companion
+com.bbva.utilitieslib.security.KeyUtils +.. com.bbva.utilitieslib.security.KeyUtils$EJavaAlgo
+com.bbva.utilitieslib.security.KeyUtils +.. com.bbva.utilitieslib.security.KeyUtils$EKeyParity
+com.bbva.utilitieslib.security.KeyUtils +.. com.bbva.utilitieslib.security.KeyUtils$Companion
+com.bbva.utilitieslib.security.RSA +.. com.bbva.utilitieslib.security.RSA$EKeyType
+com.bbva.utilitieslib.security.RSA +.. com.bbva.utilitieslib.security.RSA$Companion
+com.bbva.utilitieslib.interfaces.IEmpty <|.. com.bbva.utilitieslib.utils.FormatAmount
+@enduml
