@@ -4,7 +4,9 @@ fun String.toBoolean(): Boolean =
     when (this) {
         "0"  -> false
         "1"  -> true
-        else -> throw IllegalArgumentException("ilegal value $this")
+        "00"  -> false
+        "01"  -> true
+        else -> throw IllegalArgumentException("illegal value $this")
     }
 
 fun String.formatAmount(symbol: String, decimal: Int): String {
@@ -111,3 +113,6 @@ fun String.substring(char: String, count: Int): String {
     else
         this
 }
+
+fun String.toAsciiToHexa() = this.map { it.code.toString(16).padStart(2, '0') }
+    .joinToString("").uppercase()
