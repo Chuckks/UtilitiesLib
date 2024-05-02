@@ -190,6 +190,12 @@ fun ByteArray.toBcdToHexa(): ByteArray {
     return result
 }
 
+fun ByteArray.toAsciiToHexa(): String {
+    return this.joinToString("") { byte ->
+        byte.toInt().and(0xFF).toString(16).padStart(2, '0')
+    }.uppercase()
+}
+
 fun ByteArray.toHexaToAscii(): ByteArray =
     this.toHexaToAscii(this.size * 2)
 

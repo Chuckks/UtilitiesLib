@@ -20,6 +20,8 @@ fun Int.toHexString(): String {
         result
 }
 
+fun Int.toAsciiToHexa() = this.toString(16).toAsciiToHexa()
+
 fun Int.toBcd(): ByteArray {
     require(this >= 0) { "Input value must be non-negative." }
 
